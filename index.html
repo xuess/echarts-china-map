@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>echarts 中国地图</title>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/china.js"></script>
+
+    <!-- 主题 -->
+    <script src="js/macarons.js"></script>
+  </head>
+  <body>
+    <!-- 中国地图1 -->
+    <div id="chinaMapData" style="height:800px;width:1100px"></div>
+    <!-- 中国地图2 -->
+    <div id="chinaMapData1" style="height:800px;width:1100px"></div>
+    <script>
+      //中国地图
+      function randomData() {
+        return Math.round(Math.random() * 1000);
+      }
+
+      // echarts画图实例
+      let chinaMapChart = null;
+      let chinaMapChart1 = null;
+      // 画图区域
+      chinaMapChart = echarts.init(
+        document.getElementById("chinaMapData"),
+        "macarons"
+      );
+      chinaMapChart1 = echarts.init(
+        document.getElementById("chinaMapData1"),
+        "macarons"
+      );
+
+      let optionChinaMap = {
+        tooltip: {
+          trigger: "item"
+        },
+        legend: {
+          orient: "horizontal", //图例的排列方向
+          textStyle: { color: "#fff" },
+          x: "left", //图例的位置
+          y: "20",
+
+          data: ["全国数据"]
+        },
+
+        visualMap: {
+          //颜色的设置  dataRange
+          textStyle: { color: "#fff" },
+          x: "left",
+          y: "bottom",
+          splitList: [
+            { start: 1500 },
+            { start: 900, end: 1500 },
+            { start: 310, end: 1000 },
+            { start: 200, end: 300 },
+            { start: 50, end: 200 },
+            { start: 0, end: 50 }
+          ],
+          // text:['高','低'],// 文本，默认为数值文本
+          // color: ['#65A2D9', '#E09107', '#A3E00B']
+          color: [
+            "#5475f5",
+            "#9feaa5",
+            "#3FA7FF",
+            "#66E0E3",
+            "#FFDC5E",
+            "#9fb5ea"
+          ]
+        },
+        // roamController: {//控制地图的上下左右放大缩小
+        //     show: true,
+        //     x: 'right',
+        //     mapTypeControl: {
+        //         'china': true
+        //     }
+        // },
+        series: [
+          {
+            name: "全国数据",
+            type: "map",
+            mapType: "china",
+            zoom: 1.1,
+            roam: false, //是否开启鼠标缩放和平移漫游
+            itemStyle: {
+              //地图区域的多边形 图形样式
+              normal: {
+                //是图形在默认状态下的样式
+                label: {
+                  show: true,
+                  textStyle: { color: "rgb(249, 249, 249)" }
+                }
+              },
+              emphasis: {
+                //是图形在高亮状态下的样式,比如在鼠标悬浮或者图例联动高亮时
+                label: { show: true }
+              }
+            },
+            top: "100", //组件距离容器的距离
+            data: [
+              { name: "上海", value: randomData() },
+              { name: "北京", value: "100" },
+              { name: "天津", value: randomData() },
+              { name: "重庆", value: randomData() },
+              { name: "河北", value: randomData() },
+              { name: "河南", value: randomData() },
+              { name: "云南", value: randomData() },
+              { name: "辽宁", value: randomData() },
+              { name: "黑龙江", value: randomData() },
+              { name: "湖南", value: randomData() },
+              { name: "安徽", value: randomData() },
+              { name: "山东", value: randomData() },
+              { name: "新疆", value: randomData() },
+              { name: "江苏", value: randomData() },
+              { name: "浙江", value: randomData() },
+              { name: "江西", value: randomData() },
+              { name: "湖北", value: randomData() },
+              { name: "广西", value: randomData() },
+              { name: "甘肃", value: randomData() },
+              { name: "山西", value: randomData() },
+              { name: "内蒙古", value: randomData() },
+              { name: "陕西", value: randomData() },
+              { name: "吉林", value: randomData() },
+              { name: "福建", value: randomData() },
+              { name: "贵州", value: randomData() },
+              { name: "广东", value: randomData() },
+              { name: "青海", value: randomData() },
+              { name: "西藏", value: randomData() },
+              { name: "四川", value: randomData() },
+              { name: "宁夏", value: randomData() },
+              { name: "海南", value: randomData() },
+              { name: "台湾", value: randomData() },
+              { name: "香港", value: randomData() },
+              { name: "澳门", value: randomData() }
+            ]
+          }
+        ]
+      };
+
+      let optionChinaMap1 = {
+        title: {
+          text: "中国地图",
+          subtext: "数据纯属虚构",
+          left: "center"
+        },
+        tooltip: {
+          trigger: "item"
+        },
+
+        //左侧小导航图标
+        visualMap: {
+          min: 0,
+          max: 2500,
+          left: "left",
+          top: "bottom",
+          text: ["高", "低"],
+          calculable: true
+        },
+        //右侧小导航
+        toolbox: {
+          show: true,
+          orient: "vertical",
+          left: "right",
+          top: "center",
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        series: [
+          {
+            name: "中国",
+            type: "map",
+            mapType: "china",
+            roam: true,
+            label: {
+              normal: {
+                show: true //显示省份
+              },
+              emphasis: {
+                show: false
+              }
+            },
+            data: [
+              { name: "北京", value: randomData() },
+              { name: "天津", value: randomData() },
+              { name: "上海", value: randomData() },
+              { name: "重庆", value: randomData() },
+              { name: "河北", value: randomData() },
+              { name: "河南", value: randomData() },
+              { name: "云南", value: randomData() },
+              { name: "辽宁", value: randomData() },
+              { name: "黑龙江", value: randomData() },
+              { name: "湖南", value: randomData() },
+              { name: "安徽", value: randomData() },
+              { name: "山东", value: randomData() },
+              { name: "新疆", value: randomData() },
+              { name: "江苏", value: randomData() },
+              { name: "浙江", value: randomData() },
+              { name: "江西", value: randomData() },
+              { name: "湖北", value: randomData() },
+              { name: "广西", value: randomData() },
+              { name: "甘肃", value: randomData() },
+              { name: "山西", value: randomData() },
+              { name: "内蒙古", value: randomData() },
+              { name: "陕西", value: randomData() },
+              { name: "吉林", value: randomData() },
+              { name: "福建", value: randomData() },
+              { name: "贵州", value: randomData() },
+              { name: "广东", value: randomData() },
+              { name: "青海", value: randomData() },
+              { name: "西藏", value: randomData() },
+              { name: "四川", value: randomData() },
+              { name: "宁夏", value: randomData() },
+              { name: "海南", value: randomData() },
+              { name: "台湾", value: randomData() },
+              { name: "香港", value: randomData() },
+              { name: "澳门", value: randomData() }
+            ]
+          }
+        ]
+      };
+
+      chinaMapChart.setOption(optionChinaMap, true);
+      chinaMapChart1.setOption(optionChinaMap1, true);
+
+      //   放大缩小
+      window.addEventListener("resize", function() {
+        chinaMapChart.resize();
+        chinaMapChart1.resize();
+      });
+    </script>
+  </body>
+</html>
